@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['app/main.pyclear'],
+    ['app/main.py'],
     pathex=[],
     binaries=[],
     datas=[],
