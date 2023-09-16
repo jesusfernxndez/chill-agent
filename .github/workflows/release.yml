@@ -1,9 +1,13 @@
 name: Generar Release
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
       - main
+
 
 jobs:
   build:
@@ -29,14 +33,16 @@ jobs:
 
     - name: Create Release
       id: create_release
+      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.ref_name }}
-      run: |
-        gh release create "$GITHUB_REF_NAME" \
-          --repo="$GITHUB_REPOSITORY" \
-          --title="${GITHUB_REPOSITORY#*/}release-1" \
-          --generate-notes
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          Release v1.0
+        draft: false
+        prerelease: false
     
     - name: Upload Release Asset
       id: upload-release-asset 
